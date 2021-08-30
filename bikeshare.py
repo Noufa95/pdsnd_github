@@ -2,10 +2,12 @@ import time
 import pandas as pd
 import numpy as np
 
+#Creating a dictionary containing the data sources for the three cities
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
+#Function to figure out the filtering requirements of the user
 def get_filters():
 
     """
@@ -52,7 +54,7 @@ def get_filters():
     print('-'*40)
     return city,month, day
 
-
+#Function to load data from .csv files
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
@@ -74,6 +76,8 @@ def load_data(city, month, day):
         month = months.index(month) + 1
         df = df[df['month'] == month]
     if day != 'all':df = df[df['day_of_week'] == day.title()]
+
+     #Returns the selected file as a dataframe (df) with relevant columns
     return df
 
 
@@ -95,6 +99,7 @@ def time_stats(df):
     print('the most common day of week is:',common_day)
 
     # display the most common start hour
+      #Extract hour from the Start Time column to create an hour column
     df['hour'] = df['Start Time'].dt.hour
     common_hour= df['hour'].mode()[0]
     print('the most common start hour is:', common_hour)
@@ -154,6 +159,7 @@ def user_stats(df):
     start_time = time.time()
 
     # Display counts of user types
+    #The total users are counted using value_counts method
     user_types = df['User Type'].value_counts()
     print('the counts of user types is: ', user_types)
 
