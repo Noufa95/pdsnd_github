@@ -18,13 +18,22 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    while True:
-        city = input('What city of theses you would like to find about: Chicago, New York City, Washington?..\n').lower()
-        if city not in CITY_DATA:
-            print('please write the correct name')
-        else:
-             break
+    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs        
+    city = ''
+    #Running this loop to ensure the correct user input gets selected else repeat
+    while city not in CITY_DATA.keys():
+        print("\nWelcome to this program. Please choose your city:")
+        print("\n1. Chicago 2. New York City 3. Washington")
+        print("\nAccepted input:\nFull name of city; not case sensitive (e.g. chicago or CHICAGO).\nFull name in title case (e.g. Chicago).")
+        #Taking user input and converting into lower to standardize them
+        #You will find this happening at every stage of input throughout this
+        city = input().lower()
+
+        if city not in CITY_DATA.keys():
+            print("\nPlease check your input, it doesn\'t appear to be conforming to any of the accepted input formats.")
+            print("\nRestarting...")
+
+    print(f"\nYou have chosen {city.title()} as your city.")
     # get user input for month (all, january, february, ... , june)
     while True:
         month = input('Choose the month: January, February, March, April, May,June? or type "all" to display all months data..\n').lower()
@@ -75,7 +84,7 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
     df ['Start Time']= pd.to_datetime(df['Start Time'])
-    
+
     # display the most common month
     df['month']=df['Start Time'].dt.month
     common_month= df['month'].mode()[0]
@@ -202,7 +211,7 @@ def user_stats(df):
         print('-'*40)
 
 def display_raw_data_df(df):
-    
+
     raw = input('want to display the raw data? Yes or No \n').lower()
     if raw == 'yes':
         count = 0
@@ -231,4 +240,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
